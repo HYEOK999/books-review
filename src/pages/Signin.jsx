@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import SigninBg from '../components/Signin/SigninBg';
