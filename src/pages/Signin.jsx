@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { Row, Col } from 'antd';
+import SigninBg from '../components/Signin/SigninBg';
 
 const StyledRow = styled(Row).attrs(() => ({
   type: 'flex',
@@ -56,7 +57,9 @@ const Signin = () => (
         Please Share Your Opinion on Web Development Books.
       </StyledSubTitle>
       <StyledUnderline />
-      <StyledContents></StyledContents>
+      <StyledContents>
+        <SigninBg />
+      </StyledContents>
     </StyledCol>
   </StyledRow>
 );
