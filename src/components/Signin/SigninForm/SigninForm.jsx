@@ -7,6 +7,8 @@ import SigninSupportUl from './SigninSupportUl';
 const StyledCol = styled(Col).attrs(() => ({
   span: 12,
 }))`
+  padding: 30px;
+  font-weight: 600;
   vertical-align: top;
 `;
 
