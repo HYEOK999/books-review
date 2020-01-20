@@ -23,6 +23,18 @@ const StyledTitle = styled.div`
   text-transform: uppercase;
 `;
 
+const StyledGifImg = styled.img.attrs(() => ({
+  src: '/book.gif',
+  alt: 'Signin',
+}))`
+  position: absolute;
+  display: block;
+  width: 100px;
+  height: 90px;
+  top: -80px;
+  left: calc(50% - 50px);
+`;
+
 const StyledSubTitle = styled.div`
   text-align: center;
   font-size: 27px;
@@ -52,7 +64,10 @@ const StyledContents = styled(Row).attrs(() => ({
 const Signin = () => (
   <StyledRow>
     <StyledCol>
-      <StyledTitle>Review Service For Books</StyledTitle>
+      <StyledTitle>
+        Review Service For Books
+        <StyledGifImg />
+      </StyledTitle>
       <StyledSubTitle>
         Please Share Your Opinion on Web Development Books.
       </StyledSubTitle>
