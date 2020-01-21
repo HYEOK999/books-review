@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { Button, message } from 'antd';
 import axios from 'axios';
 
 const SigninLoginForm = ({ className }) => {
@@ -8,8 +9,10 @@ const SigninLoginForm = ({ className }) => {
   const passwordRef = React.createRef();
 
   function click() {
-    const email = emailRef.current.state.value;
-    const password = passwordRef.current.state.value;
+    console.log(emailRef);
+
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
     axios
       .post(
