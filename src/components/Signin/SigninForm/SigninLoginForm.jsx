@@ -1,19 +1,61 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from 'antd';
+import axios from 'axios';
 
 const SigninLoginForm = ({ className }) => {
+  const emailRef = React.createRef();
+  const passwordRef = React.createRef();
+
+  function click() {
+    const email = emailRef.current.state.value;
+    const password = passwordRef.current.state.value;
+
+    axios
+      .post(
+        //경로, 바디, 헤더(옵션)
+        'https://api.marktube.tv/v1/me',
+        {
+          email, // email: email
+          password, // password: password
+        },
+      )
+      .then(response => {
+        console.log(response.data);
+        const { token } = response.data;
+        console.log(token);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   return (
     <form className={className}>
       <fieldset>
         <div>
           <label>Email</label>
-          <input autoFocus type="email" placeholder="Enter your E-mail" />
+          <input
+            autoFocus
+            type="email"
+            placeholder="Enter your E-mail"
+            autoComplete="email"
+            name="email"
+            ref={emailRef}
+          />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" placeholder="Enter your Password" />
+          <input
+            type="password"
+            autoComplete="current-password"
+            placeholder="Enter your Password"
+            ref={passwordRef}
+          />
         </div>
-        <button>SIGN IN</button>
+        <StyledButton size="large" onClick={click}>
+          Sign In
+        </StyledButton>
       </fieldset>
     </form>
   );
@@ -52,16 +94,16 @@ const StyledLoginForm = styled(SigninLoginForm)`
     border-color: #719ece;
     box-shadow: 0 0 10px #719ece;
   }
+`;
 
-  button {
-    background-color: rgb(30, 74, 94);
-    border: none;
-    color: rgb(241, 246, 247);
-    font-size: 16px;
-    padding: 6px 30px;
-  }
+const StyledButton = styled(Button)`
+  background-color: rgb(30, 74, 94);
+  border: none;
+  color: rgb(241, 246, 247);
+  font-size: 16px;
+  padding: 6px 30px;
 
-  button:hover {
+  &:hover {
     color: rgb(30, 74, 94);
     background-color: rgb(241, 246, 247);
     box-shadow: 1px 1px rgb(30, 74, 94), -1px -1px rgb(30, 74, 94),
