@@ -30,11 +30,10 @@ const StyledContent = styled(Content)`
     left: -15px;
     background-color: #188ef4;
     border-radius: 50%;
-  }
-
-  i {
-    color: #fff;
-    padding: 7px;
+    i {
+      color: #fff;
+      padding: 7px;
+    }
   }
 `;
 
