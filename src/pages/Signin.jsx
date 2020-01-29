@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import SigninBg from '../components/Signin/SigninBg';
 import SigninForm from '../components/Signin/SigninForm/SigninForm';
+import { Redirect } from 'react-router-dom';
 
 const StyledRow = styled(Row).attrs(() => ({
   type: 'flex',
@@ -61,23 +62,32 @@ const StyledContents = styled(Row).attrs(() => ({
   width: 800px;
 `;
 
-const Signin = () => (
-  <StyledRow>
-    <StyledCol>
-      <StyledTitle>
-        Review Service For Books
-        <StyledGifImg />
-      </StyledTitle>
-      <StyledSubTitle>
-        Please Share Your Opinion on Web Development Books.
-      </StyledSubTitle>
-      <StyledUnderline />
-      <StyledContents>
-        <SigninBg />
-        <SigninForm />
-      </StyledContents>
-    </StyledCol>
-  </StyledRow>
-);
+const Signin = () => {
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    console.log('로그인 중 입니다.');
+    return <Redirect to="/" />;
+  }
+
+  return (
+    <StyledRow>
+      <StyledCol>
+        <StyledTitle>
+          Review Service For Books
+          <StyledGifImg />
+        </StyledTitle>
+        <StyledSubTitle>
+          Please Share Your Opinion on Web Development Books.
+        </StyledSubTitle>
+        <StyledUnderline />
+        <StyledContents>
+          <SigninBg />
+          <SigninForm />
+        </StyledContents>
+      </StyledCol>
+    </StyledRow>
+  );
+};
 
 export default Signin;
