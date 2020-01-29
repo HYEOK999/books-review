@@ -5,32 +5,35 @@ import { Button, message } from 'antd';
 import axios from 'axios';
 
 const SigninLoginForm = ({ className }) => {
+  const history = useHistory();
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
+  const [loading, setLoading] = useState(false);
 
-  function click() {
-    console.log(emailRef);
-
+  async function click() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    axios
-      .post(
-        //경로, 바디, 헤더(옵션)
-        'https://api.marktube.tv/v1/me',
-        {
-          email, // email: email
-          password, // password: password
-        },
-      )
-      .then(response => {
-        console.log(response.data);
-        const { token } = response.data;
-        console.log(token);
-      })
-      .catch(error => {
-        console.log(error);
+    try {
+      setLoading(true);
+      const response = await axios.post('https://api.marktube.tv/v1/me', {
+        email,
+        password,
       });
+      const { token } = response.data;
+      setLoading(false);
+      localStorage.setItem('token', token);
+      history.push('/');
+    } catch (error) {
+      setLoading(false);
+      if (error.response.data.error === 'USER_NOT_EXIST') {
+        message.error('해당 유저가 존재하지 않습니다.');
+      } else if (error.response.data.error === 'PASSWORD_NOT_MATCH') {
+        message.error('비밀번호가 다릅니다.');
+      } else {
+        message.error('로그인에 문제가 있습니다.');
+      }
+    }
   }
 
   return (
@@ -56,7 +59,7 @@ const SigninLoginForm = ({ className }) => {
             ref={passwordRef}
           />
         </div>
-        <StyledButton size="large" onClick={click}>
+        <StyledButton size="large" loading={loading} onClick={click}>
           Sign In
         </StyledButton>
       </fieldset>
@@ -77,6 +80,7 @@ const StyledLoginForm = styled(SigninLoginForm)`
   }
   input {
     margin: 10px 0 20px;
+    padding-left: 20px;
     display: block;
     width: 100%;
     height: 30px;
