@@ -36,6 +36,11 @@ const SigninLoginForm = ({ className }) => {
     }
   }
 
+  async function press(e) {
+    if (e.key !== 'Enter') return;
+    click();
+  }
+
   return (
     <form className={className}>
       <fieldset>
@@ -57,6 +62,7 @@ const SigninLoginForm = ({ className }) => {
             autoComplete="current-password"
             placeholder="Enter your Password"
             ref={passwordRef}
+            onKeyPress={e => press(e)}
           />
         </div>
         <StyledButton size="large" loading={loading} onClick={click}>

@@ -39,7 +39,8 @@ const StyledGifImg = styled.img.attrs(() => ({
 const StyledSubTitle = styled.div`
   text-align: center;
   font-size: 27px;
-  font-weight: bold;
+  font-weight: normal;
+  color: rgb(30, 74, 94);
   text-transform: uppercase;
 `;
 

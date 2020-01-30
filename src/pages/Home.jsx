@@ -46,8 +46,28 @@ const Home = ({ token, history }) => {
   }, [token]);
 
   const logout = () => {
-    localStorage.clear();
-    history.push('/signin'); // 로그아웃시 보여줄 페이지
+    async function logout() {
+      try {
+        await axios.delete('https://api.marktube.tv/v1/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        localStorage.clear();
+        history.push('/signin'); // 로그아웃시 보여줄 페이지
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    logout();
+  };
+
+  const initValue = () => {
+    titleRef.current.state.value = '';
+    messageRef.current.state.value = '';
+    authorRef.current.state.value = '';
+    urlRef.current.state.value = '';
   };
 
   const addBook = () => {
@@ -78,6 +98,7 @@ const Home = ({ token, history }) => {
       }
     }
     addBook();
+    initValue();
     setVisible(false);
   };
 
