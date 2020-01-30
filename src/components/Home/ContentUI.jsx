@@ -66,6 +66,7 @@ const StyledContentP = styled.p`
 
 const StyledButton = styled(Button)`
   position: absolute;
+  font-size: 25px;
   top: 5px;
   right: 5px;
   border: none;
