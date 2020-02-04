@@ -1,8 +1,9 @@
 import React from 'react';
 import { Col } from 'antd';
 import styled from 'styled-components';
-import SigninLoginForm from './SigninLoginForm';
 import SigninSupportUl from './SigninSupportUl';
+import SigninLoginFormContainer from '../../../containers/SigninLoginFormContainer';
+// import SigninLoginForm from './SigninLoginForm';
 
 const StyledCol = styled(Col).attrs(() => ({
   span: 12,
@@ -38,7 +39,7 @@ const SigninForm = () => (
   <StyledCol>
     <StyledLogoH1>Books</StyledLogoH1>
     <StyledLoginTitle>LOG IN. START SEARCHING.</StyledLoginTitle>
-    <SigninLoginForm></SigninLoginForm>
+    <SigninLoginFormContainer></SigninLoginFormContainer>
     <SigninSupportUl></SigninSupportUl>
   </StyledCol>
 );
