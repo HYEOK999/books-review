@@ -8,6 +8,8 @@ import withAuth from '../hocs/withAuth';
 import InputBookInfo from '../components/Home/InputBookInfo';
 import HeaderUI from '../components/Home/HeaderUI';
 import ContentUI from '../components/Home/ContentUI';
+import { useDispatch } from 'react-redux';
+import { removeToken } from '../actions';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -23,6 +25,7 @@ const StyledSideMenu = styled(Menu).attrs(() => ({
 
 const Home = ({ token, history }) => {
   const [books, setBooks] = useState([]);
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const titleRef = React.createRef();
   const messageRef = React.createRef();
@@ -45,23 +48,21 @@ const Home = ({ token, history }) => {
     getBookList();
   }, [token]);
 
-  const logout = () => {
-    async function logout() {
-      try {
-        await axios.delete('https://api.marktube.tv/v1/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        localStorage.clear();
-        history.push('/signin'); // 로그아웃시 보여줄 페이지
-      } catch (error) {
-        console.log(error);
-      }
+  async function logout() {
+    try {
+      await axios.delete('https://api.marktube.tv/v1/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
     }
 
-    logout();
-  };
+    localStorage.removeItem('token');
+    history.push('/signin'); // 로그아웃시 보여줄 페이지
+    dispatch(removeToken());
+  }
 
   const initValue = () => {
     titleRef.current.state.value = '';
