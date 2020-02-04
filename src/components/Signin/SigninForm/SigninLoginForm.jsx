@@ -1,40 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Button, message } from 'antd';
-import axios from 'axios';
 
-const SigninLoginForm = ({ className }) => {
+const SigninLoginForm = ({ className, loading, login, error }) => {
   const history = useHistory();
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   async function click() {
+    // async function click() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    try {
-      setLoading(true);
-      const response = await axios.post('https://api.marktube.tv/v1/me', {
-        email,
-        password,
-      });
-      const { token } = response.data;
-      setLoading(false);
-      localStorage.setItem('token', token);
-      history.push('/');
-    } catch (error) {
-      setLoading(false);
-      if (error.response.data.error === 'USER_NOT_EXIST') {
-        message.error('해당 유저가 존재하지 않습니다.');
-      } else if (error.response.data.error === 'PASSWORD_NOT_MATCH') {
-        message.error('비밀번호가 다릅니다.');
-      } else {
-        message.error('로그인에 문제가 있습니다.');
-      }
-    }
+    // try {
+    //   // setLoading(true);
+    console.log('test1');
+
+    await login(email, password);
+    history.push('/');
   }
+
+  useEffect(() => {
+    if (error === null) return;
+    if (error === 'USER_NOT_EXIST') {
+      message.error('유저가 없습니다.');
+    } else if (error === 'PASSWORD_NOT_MATCH') {
+      message.error('비밀번호가 틀렸습니다.');
+    } else {
+      message.error('로그인에 문제가 있습니다.');
+    }
+  }, [error]);
 
   async function press(e) {
     if (e.key !== 'Enter') return;
