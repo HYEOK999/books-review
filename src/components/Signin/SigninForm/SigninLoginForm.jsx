@@ -16,8 +16,6 @@ const SigninLoginForm = ({ className, loading, login, error }) => {
 
     // try {
     //   // setLoading(true);
-    console.log('test1');
-
     await login(email, password);
     history.push('/');
   }
