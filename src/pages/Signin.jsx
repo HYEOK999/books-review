@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Row, Col } from 'antd';
 import SigninBg from '../components/Signin/SigninBg';
 import SigninForm from '../components/Signin/SigninForm/SigninForm';
-import { Redirect } from 'react-router-dom';
+import withAuth from '../hocs/withAuth';
 
 const StyledRow = styled(Row).attrs(() => ({
   type: 'flex',
@@ -64,12 +64,12 @@ const StyledContents = styled(Row).attrs(() => ({
 `;
 
 const Signin = () => {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
-  if (token) {
-    console.log('로그인 중 입니다.');
-    return <Redirect to="/" />;
-  }
+  // if (token) {
+  //   console.log('로그인 중 입니다.');
+  //   return <Redirect to="/" />;
+  // }
 
   return (
     <StyledRow>
@@ -91,4 +91,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default withAuth(Signin, false);
