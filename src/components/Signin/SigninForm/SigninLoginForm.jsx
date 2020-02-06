@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Button, message } from 'antd';
 
-const SigninLoginForm = ({ className, loading, login, error }) => {
+const SigninLoginForm = ({ className, loading, loginThunk, error }) => {
   const history = useHistory();
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
@@ -14,10 +14,14 @@ const SigninLoginForm = ({ className, loading, login, error }) => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
+    try {
+      await loginThunk(email, password);
+      history.push('/');
+    } catch {}
     // try {
-    //   // setLoading(true);
-    await login(email, password);
-    history.push('/');
+    //   await login(email, password);
+    //   // history.push('/');
+    // } catch (error) {}
   }
 
   useEffect(() => {
