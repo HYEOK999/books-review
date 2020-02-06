@@ -1,8 +1,8 @@
 import React from 'react';
 import uuid from 'uuid';
-
 import styled from 'styled-components';
 import { Layout, Button, Icon } from 'antd';
+import { useEffect } from 'react';
 
 const { Content } = Layout;
 
@@ -63,19 +63,37 @@ const StyledContentP = styled.p`
     color: #1890ff;
   }
 `;
+// const StyledEditButton = styled(Button)`
+//   position: absolute;
+//   font-size: 25px;
+//   top: 5px;
+//   right: 45px;
+//   border: none;
+//   box-shadow: none;
+// `;
 
-const StyledButton = styled(Button)`
+const StyledDeleteButton = styled(Button)`
   position: absolute;
   font-size: 25px;
   top: 5px;
   right: 5px;
   border: none;
   box-shadow: none;
+  padding-left: 0;
 `;
 
-const ContentUI = ({ books, deleteBook }) => {
+const ContentUI = ({ token, books, setBooks, deleteBook, editBook }) => {
+  useEffect(() => {
+    setBooks(token);
+  }, [token, setBooks]);
+
+  // if (error !== null) {
+  //   return <div>에러다</div>;
+  // }
+
   return (
     <StyledContent>
+      {/* <>{loading && <p>로딩중</p>}</> */}
       <ul>
         {books &&
           books.map(book => (
@@ -89,9 +107,16 @@ const ContentUI = ({ books, deleteBook }) => {
                 <span>{book.message}</span>
                 <span>{book.url}</span>
               </StyledContentP>
-              <StyledButton onClick={() => deleteBook(book.bookId)}>
+              {/* <StyledEditButton
+                onClick={() => editBook(token, books, book.bookId)}
+              >
+                <Icon type="edit" />
+              </StyledEditButton> */}
+              <StyledDeleteButton
+                onClick={() => deleteBook(token, books, book.bookId)}
+              >
                 <Icon type="delete" />
-              </StyledButton>
+              </StyledDeleteButton>
             </li>
           ))}
       </ul>
