@@ -8,10 +8,7 @@ import create from './store';
 import { Provider } from 'react-redux';
 
 const token = localStorage.getItem('token');
-const store = create(
-  { token },
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+const store = create({ token });
 
 ReactDOM.render(
   <Provider store={store}>
