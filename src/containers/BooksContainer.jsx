@@ -1,21 +1,21 @@
 import { connect } from 'react-redux';
 // import { setBooksThunk, deleteBookThunk, editBookThunk } from '../actions';
-import { setBooksThunk, deleteBookThunk } from '../actions';
+import { getBooksSaga, deleteBookSaga } from '../redux/modules/books';
 import ContentUI from '../components/Home/ContentUI';
 
 const mapStateToProps = state => ({
-  books: state.books,
-  token: state.token,
-  loading: state.loading,
-  error: state.error,
+  books: state.books.books,
+  token: state.books.token,
+  loading: state.books.loading,
+  error: state.books.error,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setBooks: async token => {
-    dispatch(setBooksThunk(token));
+  getBooks: () => {
+    dispatch(getBooksSaga());
   },
-  deleteBook: async (token, books, bookId) => {
-    dispatch(deleteBookThunk(token, books, bookId));
+  deleteBook: (books, bookId) => {
+    dispatch(deleteBookSaga({ books, bookId }));
   },
   // editBook: async (token, bookId, book) => {
   //   dispatch(editBookThunk(token, bookId, book));

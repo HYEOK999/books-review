@@ -1,15 +1,14 @@
 import { connect } from 'react-redux';
-import { addBookThunk } from '../actions';
+import { addBookSaga } from '../redux/modules/books';
 import AddBookModal from '../components/Home/AddBookModal';
 
 const mapStateToProps = state => ({
-  books: state.books,
-  token: state.token,
+  books: state.books.books,
 });
 
 const mapDispatchToProps = dispatch => ({
-  addBook: async (token, books, book) => {
-    dispatch(addBookThunk(token, books, book));
+  addBook: (books, book) => {
+    dispatch(addBookSaga({ books, book }));
   },
 });
 
