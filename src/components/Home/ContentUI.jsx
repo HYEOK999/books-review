@@ -82,10 +82,10 @@ const StyledDeleteButton = styled(Button)`
   padding-left: 0;
 `;
 
-const ContentUI = ({ token, books, setBooks, deleteBook, editBook }) => {
+const ContentUI = ({ books, getBooks, deleteBook, editBook }) => {
   useEffect(() => {
-    setBooks(token);
-  }, [token, setBooks]);
+    getBooks();
+  }, [getBooks]);
 
   // if (error !== null) {
   //   return <div>에러다</div>;
@@ -113,7 +113,7 @@ const ContentUI = ({ token, books, setBooks, deleteBook, editBook }) => {
                 <Icon type="edit" />
               </StyledEditButton> */}
               <StyledDeleteButton
-                onClick={() => deleteBook(token, books, book.bookId)}
+                onClick={() => deleteBook(books, book.bookId)}
               >
                 <Icon type="delete" />
               </StyledDeleteButton>

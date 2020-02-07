@@ -3,14 +3,7 @@ import { Button, Modal } from 'antd';
 
 import InputBookInfo from './InputBookInfo';
 
-const AddBookModal = ({
-  visible,
-  handleOk,
-  handleCancel,
-  addBook,
-  token,
-  books,
-}) => {
+const AddBookModal = ({ visible, handleOk, handleCancel, addBook, books }) => {
   const titleRef = React.createRef();
   const messageRef = React.createRef();
   const authorRef = React.createRef();
@@ -31,9 +24,9 @@ const AddBookModal = ({
       url: urlRef.current.state.value,
     };
 
-    async function add(token, book) {
+    async function add(book) {
       try {
-        await addBook(token, books, {
+        await addBook(books, {
           title: book.title,
           message: book.message,
           author: book.author,
@@ -43,7 +36,7 @@ const AddBookModal = ({
         console.log(error);
       }
     }
-    add(token, book);
+    add(book);
     initValue();
     handleCancel();
   };

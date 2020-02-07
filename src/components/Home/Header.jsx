@@ -1,9 +1,9 @@
 import React from 'react';
 import HeaderUI from './HeaderUI';
 
-const Header = ({ token, logoutThunk }) => {
+const Header = ({ signOut }) => {
   function logout() {
-    logoutThunk(token);
+    signOut();
   }
 
   return (
