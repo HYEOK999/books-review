@@ -24,17 +24,13 @@ const AddBookModal = ({ visible, handleOk, handleCancel, addBook, books }) => {
       url: urlRef.current.state.value,
     };
 
-    async function add(book) {
-      try {
-        await addBook(books, {
-          title: book.title,
-          message: book.message,
-          author: book.author,
-          url: book.url,
-        });
-      } catch (error) {
-        console.log(error);
-      }
+    function add(book) {
+      addBook(books, {
+        title: book.title,
+        message: book.message,
+        author: book.author,
+        url: book.url,
+      });
     }
     add(book);
     initValue();
