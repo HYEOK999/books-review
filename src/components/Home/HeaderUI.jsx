@@ -27,7 +27,7 @@ const StyledLogoH1 = styled.h1`
 const StyledLogoutButton = styled.button`
   position: absolute;
   top: -6px;
-  right: 12px;
+  right: 50px;
   color: #fff;
   background-color: inherit;
   border: none;
