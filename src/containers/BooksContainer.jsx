@@ -5,7 +5,6 @@ import ContentUI from '../components/Home/ContentUI';
 
 const mapStateToProps = state => ({
   books: state.books.books,
-  token: state.books.token,
   loading: state.books.loading,
   error: state.books.error,
 });
