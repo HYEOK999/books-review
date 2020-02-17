@@ -62,7 +62,6 @@ function* addBook(books) {
   const token = yield select(state => state.auth.token);
   try {
     yield put(pending());
-    console.log('5', books);
     const res = yield call(BookService.addBook, token, books.payload.book);
     yield put(
       success([...books.payload.books, { ...res.data, deletedAt: null }]),
@@ -92,7 +91,11 @@ const initialState = {
 
 const books = handleActions(
   {
-    PENDING: (state, action) => ({ books: [], loading: true, error: null }),
+    PENDING: (state, action) => ({
+      books: state.books ? state.books : [],
+      loading: true,
+      error: null,
+    }),
     SUCCESS: (state, action) => ({
       books: action.payload.books,
       loading: false,
