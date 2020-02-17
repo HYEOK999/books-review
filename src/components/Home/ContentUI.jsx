@@ -1,10 +1,19 @@
 import React from 'react';
 import uuid from 'uuid';
 import styled from 'styled-components';
-import { Layout, Button, Icon } from 'antd';
+import { Layout, Button, Icon, Alert } from 'antd';
 import { useEffect } from 'react';
+import { Spin } from 'antd';
 
 const { Content } = Layout;
+
+// const StyledSpinnerImg = styled.img`
+//   display: block;
+//   margin: 0 auto;
+//   width: 40px;
+//   height: 40px;
+//   /* transform: translateY(-100px); */
+// `;
 
 const StyledContent = styled(Content)`
   opacity: 0.7;
@@ -22,7 +31,7 @@ const StyledContent = styled(Content)`
     box-shadow: #d2d2d2 0px 0px 15px;
   }
 
-  div {
+  div.Read {
     position: absolute;
     width: 30px;
     height: 30px;
@@ -72,6 +81,10 @@ const StyledContentP = styled.p`
 //   box-shadow: none;
 // `;
 
+const StyledErrorAlert = styled.div`
+  padding-top: 10px;
+`;
+
 const StyledDeleteButton = styled(Button)`
   position: absolute;
   font-size: 25px;
@@ -82,23 +95,46 @@ const StyledDeleteButton = styled(Button)`
   padding-left: 0;
 `;
 
-const ContentUI = ({ books, getBooks, deleteBook, editBook }) => {
+const StyledSpin = styled(Spin)`
+  position: absolute;
+  top: 75px;
+  right: 350px;
+`;
+
+const ContentUI = ({
+  error,
+  loading,
+  books,
+  getBooks,
+  deleteBook,
+  editBook,
+}) => {
   useEffect(() => {
     getBooks();
   }, [getBooks]);
 
-  // if (error !== null) {
-  //   return <div>에러다</div>;
-  // }
+  if (error !== null) {
+    return (
+      <StyledErrorAlert>
+        <Alert
+          message="Error Text"
+          description={error.message}
+          type="error"
+          closable
+          onClose={() => {}}
+        />
+      </StyledErrorAlert>
+    );
+  }
 
   return (
     <StyledContent>
-      {/* <>{loading && <p>로딩중</p>}</> */}
+      {loading && <StyledSpin size="large" />}
       <ul>
         {books &&
           books.map(book => (
             <li key={uuid.v4()}>
-              <div>
+              <div className="Read">
                 <Icon type="read" />
               </div>
               <StyledTitleh3>{book.title}</StyledTitleh3>
