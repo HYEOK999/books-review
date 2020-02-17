@@ -57,7 +57,7 @@ const Home = () => {
           </StyledSideMenu>
         </Sider>
         {/* main */}
-        <Layout style={{ padding: '52px' }}>
+        <Layout style={{ padding: '52px', minHeight: '100vh' }}>
           {/* Open Modal */}
           <Button type="primary" onClick={showModal}>
             Add Book List
