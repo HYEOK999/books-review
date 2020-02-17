@@ -31,7 +31,7 @@ const StyledGifImg = styled.img.attrs(() => ({
   position: absolute;
   display: block;
   width: 100px;
-  height: 90px;
+  height: 80px;
   top: -80px;
   left: calc(50% - 50px);
 `;
