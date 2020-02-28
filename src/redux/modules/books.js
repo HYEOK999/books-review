@@ -18,6 +18,7 @@ const { success, pending, fail } = createActions(
 export const getBooksSaga = createAction('GET_BOOKS_SAGA');
 export const deleteBookSaga = createAction('DELETE_BOOK_SAGA');
 export const addBookSaga = createAction('ADD_BOOK_SAGA');
+export const editBookSaga = createAction('EDIT_BOOK_SAGA');
 
 function* getBooks() {
   // 비동기 로직을 수행가능하다.
@@ -71,20 +72,48 @@ function* addBook(books) {
   }
 }
 
+function* editBook(books) {
+  const token = yield select(state => state.auth.token);
+  try {
+    yield put(pending());
+    const res = yield call(
+      BookService.editBook,
+      token,
+      books.payload.bookId,
+      books.payload.book,
+    );
+    console.log('aaa는용: ', res);
+    // dispatch(setBooks(books.filter(book => book.bookId !== bookId)));
+    yield put(
+      success(
+        books.payload.books.map(book =>
+          book.bookId === books.payload.bookId
+            ? {
+                ...books.payload.book,
+              }
+            : book,
+        ),
+      ),
+    );
+  } catch (error) {
+    yield put(fail(error));
+  }
+}
 // saga 함수를 등록하는 saga
 // 내가 만든 비동기로직 (나의 사가 함수 : getBooksSaga)을 동록하는 사가 함수
 export function* booksSaga() {
   // 인자 1. 액션타입 , 2. 사가함수
   // yield takeEvery(START_BOOKS_SAGA, getBooksSaga);
   // yield takeLatest(START_BOOKS_SAGA, getBooksSaga);
-  yield takeLatest('GET_BOOKS_SAGA', getBooks);
-  yield takeLatest('DELETE_BOOK_SAGA', deleteBook);
-  yield takeLatest('ADD_BOOK_SAGA', addBook);
+  yield takeLatest(getBooksSaga, getBooks);
+  yield takeLatest(deleteBookSaga, deleteBook);
+  yield takeLatest(addBookSaga, addBook);
+  yield takeLatest(editBookSaga, editBook);
 }
 
 // 초기값
 const initialState = {
-  books: [],
+  books: null,
   loading: false,
   error: null,
 };
@@ -92,7 +121,7 @@ const initialState = {
 const books = handleActions(
   {
     PENDING: (state, action) => ({
-      books: state.books ? state.books : [],
+      ...state,
       loading: true,
       error: null,
     }),
@@ -102,7 +131,7 @@ const books = handleActions(
       error: null,
     }),
     FAIL: (state, action) => ({
-      books: [],
+      ...state,
       loading: false,
       error: action.payload,
     }),
