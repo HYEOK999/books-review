@@ -6,7 +6,7 @@ const StyledInput = styled(Input)`
   margin: 15px 0;
 `;
 
-const InputBookInfo = ({ info, reference }) => {
+const InputBookInfo = ({ info, reference, value }) => {
   return (
     <>
       <label>{info}</label>
@@ -14,6 +14,7 @@ const InputBookInfo = ({ info, reference }) => {
         type="text"
         placeholder={`Add the book ${info}`}
         ref={reference}
+        defaultValue={value ? value : null}
       />
     </>
   );
