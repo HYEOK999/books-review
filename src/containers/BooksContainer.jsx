@@ -16,9 +16,6 @@ const mapDispatchToProps = dispatch => ({
   deleteBook: (books, bookId) => {
     dispatch(deleteBookSaga({ books, bookId }));
   },
-  // editBook: async (token, bookId, book) => {
-  //   dispatch(editBookThunk(token, bookId, book));
-  // },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentUI);
