@@ -37,8 +37,8 @@ function* login(auth) {
 }
 
 function* logout() {
-  const token = yield select(state => state.auth.token);
   try {
+    const token = yield select(state => state.auth.token);
     yield call(UserService.logout, token);
   } catch (error) {
     yield put(fail(error));
@@ -53,8 +53,8 @@ export function* authSaga() {
   // 인자 1. 액션타입 , 2. 사가함수
   // yield takeEvery(START_BOOKS_SAGA, getBooksSaga);
   // yield takeLatest(START_BOOKS_SAGA, getBooksSaga);
-  yield takeEvery('LOG_IN_SAGA', login);
-  yield takeLatest('LOG_OUT_SAGA', logout);
+  yield takeEvery(loginSaga, login);
+  yield takeLatest(logoutSaga, logout);
 }
 
 const initialState = {
