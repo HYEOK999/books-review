@@ -129,3 +129,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: tomato;
+}
