@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import uuid from 'uuid';
 import styled from 'styled-components';
 import { Layout, Button, Icon, Alert } from 'antd';
 import { useEffect } from 'react';
 import { Spin } from 'antd';
+import EditBookContainer from '../../containers/EditBookContainer';
 
 const { Content } = Layout;
 
@@ -16,6 +17,7 @@ const { Content } = Layout;
 // `;
 
 const StyledContent = styled(Content)`
+  position: relative;
   opacity: 0.7;
   background-color: inherit;
   padding: 24px 0;
@@ -72,14 +74,14 @@ const StyledContentP = styled.p`
     color: #1890ff;
   }
 `;
-// const StyledEditButton = styled(Button)`
-//   position: absolute;
-//   font-size: 25px;
-//   top: 5px;
-//   right: 45px;
-//   border: none;
-//   box-shadow: none;
-// `;
+const StyledEditButton = styled(Button)`
+  position: absolute;
+  font-size: 25px;
+  top: 5px;
+  right: 45px;
+  border: none;
+  box-shadow: none;
+`;
 
 const StyledErrorAlert = styled.div`
   padding-top: 10px;
@@ -97,21 +99,31 @@ const StyledDeleteButton = styled(Button)`
 
 const StyledSpin = styled(Spin)`
   position: absolute;
-  top: 75px;
-  right: 350px;
+  top: -73px;
+  right: 50%;
+  transform: translateX(50%);
 `;
 
-const ContentUI = ({
-  error,
-  loading,
-  books,
-  getBooks,
-  deleteBook,
-  editBook,
-}) => {
+const ContentUI = ({ error, loading, books, getBooks, deleteBook }) => {
   useEffect(() => {
     getBooks();
   }, [getBooks]);
+
+  const [visible, setVisible] = useState(false);
+  const [book, setBook] = useState({});
+
+  const showModal = book => {
+    setVisible(true);
+    setBook(book);
+  };
+
+  const handleOk = e => {
+    setVisible(false);
+  };
+
+  const handleCancel = e => {
+    setVisible(false);
+  };
 
   if (error !== null) {
     return (
@@ -126,7 +138,6 @@ const ContentUI = ({
       </StyledErrorAlert>
     );
   }
-
   return (
     <StyledContent>
       {loading && <StyledSpin size="large" />}
@@ -143,11 +154,9 @@ const ContentUI = ({
                 <span>{book.message}</span>
                 <span>{book.url}</span>
               </StyledContentP>
-              {/* <StyledEditButton
-                onClick={() => editBook(token, books, book.bookId)}
-              >
+              <StyledEditButton onClick={() => showModal(book)}>
                 <Icon type="edit" />
-              </StyledEditButton> */}
+              </StyledEditButton>
               <StyledDeleteButton
                 onClick={() => deleteBook(books, book.bookId)}
               >
@@ -156,6 +165,12 @@ const ContentUI = ({
             </li>
           ))}
       </ul>
+      <EditBookContainer
+        book={book}
+        visible={visible}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </StyledContent>
   );
 };
