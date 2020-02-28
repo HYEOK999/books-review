@@ -7,6 +7,7 @@ import withAuth from '../hocs/withAuth';
 import HeaderContainer from '../containers/HeaderContainer';
 import BooksContainer from '../containers/BooksContainer';
 import AddBookContainer from '../containers/AddBookContainer';
+import Head from '../components/Head';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -37,6 +38,7 @@ const Home = () => {
 
   return (
     <Layout>
+      <Head />
       {/* header */}
       <HeaderContainer />
       <Layout>
@@ -52,7 +54,7 @@ const Home = () => {
                 </span>
               }
             >
-              <Menu.Item key="1">BooList</Menu.Item>
+              <Menu.Item key="1">BookList</Menu.Item>
             </SubMenu>
           </StyledSideMenu>
         </Sider>
@@ -66,7 +68,6 @@ const Home = () => {
           <BooksContainer />
         </Layout>
       </Layout>
-
       {/* <AddBookModal /> */}
       <AddBookContainer
         visible={visible}
