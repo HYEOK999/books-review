@@ -3,8 +3,9 @@ import uuid from 'uuid';
 import styled from 'styled-components';
 import { Layout, Button, Icon, Alert } from 'antd';
 import { useEffect } from 'react';
-import { Spin } from 'antd';
+import { Spin, Table } from 'antd';
 import EditBookContainer from '../../containers/EditBookContainer';
+import GetBookModal from './GetBookModal';
 
 const { Content } = Layout;
 
@@ -24,7 +25,7 @@ const StyledContent = styled(Content)`
   margin: 0;
   min-height: 280px;
   height: calc(100vh - 210px);
-  li {
+  div.list {
     border-radius: 4px;
     position: relative;
     padding: 20px;
@@ -46,6 +47,13 @@ const StyledContent = styled(Content)`
       padding: 7px;
     }
   }
+
+  .ant-pagination {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 const StyledTitleh3 = styled.h3`
@@ -54,6 +62,7 @@ const StyledTitleh3 = styled.h3`
 `;
 
 const StyledContentP = styled.p`
+  width: 50vw;
   span {
     display: block;
     padding-top: 10px;
@@ -67,6 +76,9 @@ const StyledContentP = styled.p`
 
   span:nth-child(2) {
     font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   span:nth-child(3) {
@@ -74,6 +86,16 @@ const StyledContentP = styled.p`
     color: #1890ff;
   }
 `;
+
+const StyledSearchButton = styled(Button)`
+  position: absolute;
+  font-size: 25px;
+  top: 5px;
+  right: 85px;
+  border: none;
+  box-shadow: none;
+`;
+
 const StyledEditButton = styled(Button)`
   position: absolute;
   font-size: 25px;
@@ -109,20 +131,34 @@ const ContentUI = ({ error, loading, books, getBooks, deleteBook }) => {
     getBooks();
   }, [getBooks]);
 
-  const [visible, setVisible] = useState(false);
+  const [editVisible, setEditVisible] = useState(false);
+  const [getVisible, setGetVisible] = useState(false);
   const [book, setBook] = useState({});
 
-  const showModal = book => {
-    setVisible(true);
+  const showEditModal = book => {
+    setEditVisible(true);
+    setBook(book);
+  };
+
+  const showGetModal = book => {
+    setGetVisible(true);
     setBook(book);
   };
 
   const handleOk = e => {
-    setVisible(false);
+    setEditVisible(false);
   };
 
   const handleCancel = e => {
-    setVisible(false);
+    setEditVisible(false);
+  };
+
+  const handleOk2 = e => {
+    setGetVisible(false);
+  };
+
+  const handleCancel2 = e => {
+    setGetVisible(false);
   };
 
   if (error !== null) {
@@ -141,35 +177,66 @@ const ContentUI = ({ error, loading, books, getBooks, deleteBook }) => {
   return (
     <StyledContent>
       {loading && <StyledSpin size="large" />}
-      <ul>
-        {books &&
-          books.map(book => (
-            <li key={uuid.v4()}>
-              <div className="Read">
-                <Icon type="read" />
+      <Table
+        dataSource={books === null ? [] : books}
+        columns={[
+          {
+            title: 'Book',
+            dataIndex: 'book',
+            key: 'book',
+            render: (text, record) => (
+              <div className="list" key={uuid.v4()}>
+                <div className="Read">
+                  <Icon type="read" />
+                </div>
+                <StyledTitleh3>{record.title}</StyledTitleh3>
+                <StyledContentP>
+                  <span>{record.author}</span>
+                  <span>{record.message}</span>
+                  <span>{record.url}</span>
+                </StyledContentP>
+                <StyledSearchButton onClick={() => showGetModal(record)}>
+                  <Icon type="search" />
+                </StyledSearchButton>
+                <StyledEditButton onClick={() => showEditModal(record)}>
+                  <Icon type="edit" />
+                </StyledEditButton>
+                <StyledDeleteButton
+                  onClick={() => deleteBook(books, record.bookId)}
+                >
+                  <Icon type="delete" />
+                </StyledDeleteButton>
               </div>
-              <StyledTitleh3>{book.title}</StyledTitleh3>
-              <StyledContentP>
-                <span>{book.author}</span>
-                <span>{book.message}</span>
-                <span>{book.url}</span>
-              </StyledContentP>
-              <StyledEditButton onClick={() => showModal(book)}>
-                <Icon type="edit" />
-              </StyledEditButton>
-              <StyledDeleteButton
-                onClick={() => deleteBook(books, book.bookId)}
-              >
-                <Icon type="delete" />
-              </StyledDeleteButton>
-            </li>
-          ))}
-      </ul>
+            ),
+          },
+        ]}
+        loading={false}
+        showHeader={false}
+        pagination={{
+          size: 'small',
+          pageSize: 10,
+          align: 'center',
+        }}
+        bodyStyle={{
+          borderTop: '1px solid #e8e8e8',
+        }}
+        style={{
+          marginTop: 30,
+        }}
+        rowKey="bookId"
+      />
+
       <EditBookContainer
         book={book}
-        visible={visible}
+        visible={editVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}
+      />
+      <GetBookModal
+        book={book}
+        visible={getVisible}
+        handleOk={handleOk2}
+        handleCancel={handleCancel2}
       />
     </StyledContent>
   );
