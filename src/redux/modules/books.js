@@ -76,13 +76,12 @@ function* editBook(books) {
   const token = yield select(state => state.auth.token);
   try {
     yield put(pending());
-    const res = yield call(
+    yield call(
       BookService.editBook,
       token,
       books.payload.bookId,
       books.payload.book,
     );
-    console.log('aaa는용: ', res);
     // dispatch(setBooks(books.filter(book => book.bookId !== bookId)));
     yield put(
       success(
