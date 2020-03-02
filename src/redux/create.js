@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
 import reducer from './modules/reducer';
-import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 // react-router-dom 설치할떄 설치됨.
 import { createBrowserHistory } from 'history';
@@ -24,7 +23,7 @@ const create = () => {
       },
     },
     composeWithDevTools(
-      applyMiddleware(thunk, routerMiddleware(history), sagaMiddleware),
+      applyMiddleware(routerMiddleware(history), sagaMiddleware),
     ),
   );
 
