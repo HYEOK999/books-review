@@ -21,6 +21,17 @@ const StyledSideMenu = styled(Menu).attrs(() => ({
   border-right: 0;
 `;
 
+const StyledSider = styled(Sider).attrs(() => ({
+  width: 200,
+}))`
+  background: '#fff';
+`;
+
+const StyledLayout = styled(Layout)`
+  padding: 52px;
+  min-height: 100vh;
+`;
+
 const Home = () => {
   const [visible, setVisible] = useState(false);
 
@@ -43,7 +54,7 @@ const Home = () => {
       <HeaderContainer />
       <Layout>
         {/* side */}
-        <Sider width={200} style={{ background: '#fff' }}>
+        <StyledSider>
           <StyledSideMenu>
             <SubMenu
               key="sub1"
@@ -57,16 +68,16 @@ const Home = () => {
               <Menu.Item key="1">BookList</Menu.Item>
             </SubMenu>
           </StyledSideMenu>
-        </Sider>
+        </StyledSider>
         {/* main */}
-        <Layout style={{ padding: '52px', minHeight: '100vh' }}>
+        <StyledLayout>
           {/* Open Modal */}
           <Button type="primary" onClick={showModal}>
             Add Book List
           </Button>
           {/* <ContentUI /> */}
           <BooksContainer />
-        </Layout>
+        </StyledLayout>
       </Layout>
       {/* <AddBookModal /> */}
       <AddBookContainer
