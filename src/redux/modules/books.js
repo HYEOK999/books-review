@@ -6,6 +6,7 @@ const options = {
   prefix: 'books-review/books',
 };
 
+// 액션 타입 및 생성자를 한번에 모아서 사용한다. - redux-actions
 const { success, pending, fail } = createActions(
   {
     SUCCESS: books => ({ books }),
