@@ -64,8 +64,7 @@ const StyledContents = styled(Row).attrs(() => ({
 `;
 
 const Signin = () => {
-  // const token = localStorage.getItem('token');
-
+  // hook 대신 이용할 때
   // if (token) {
   //   console.log('로그인 중 입니다.');
   //   return <Redirect to="/" />;
