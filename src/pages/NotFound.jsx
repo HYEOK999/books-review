@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Head from '../components/Head';
 
 const StyledBackgroundWrapper = styled.div`
   background-image: url('/404NotFound.jpg');
@@ -57,6 +58,7 @@ const NotFound = ({ history }) => {
 
   return (
     <StyledBackgroundWrapper>
+      <Head />
       <StyledHeader>
         <h1>404 Not Found</h1>
       </StyledHeader>

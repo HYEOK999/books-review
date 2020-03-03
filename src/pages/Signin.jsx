@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Head from '../components/Head';
 import { Row, Col } from 'antd';
 import SigninBg from '../components/Signin/SigninBg';
 import SigninForm from '../components/Signin/SigninForm/SigninForm';
@@ -71,22 +72,25 @@ const Signin = () => {
   // }
 
   return (
-    <StyledRow>
-      <StyledCol>
-        <StyledTitle>
-          Review Service For Books
-          <StyledGifImg />
-        </StyledTitle>
-        <StyledSubTitle>
-          Please Share Your Opinion on Web Development Books.
-        </StyledSubTitle>
-        <StyledUnderline />
-        <StyledContents>
-          <SigninBg />
-          <SigninForm />
-        </StyledContents>
-      </StyledCol>
-    </StyledRow>
+    <>
+      <Head />
+      <StyledRow>
+        <StyledCol>
+          <StyledTitle>
+            Review Service For Books
+            <StyledGifImg />
+          </StyledTitle>
+          <StyledSubTitle>
+            Please Share Your Opinion on Web Development Books.
+          </StyledSubTitle>
+          <StyledUnderline />
+          <StyledContents>
+            <SigninBg />
+            <SigninForm />
+          </StyledContents>
+        </StyledCol>
+      </StyledRow>
+    </>
   );
 };
 
